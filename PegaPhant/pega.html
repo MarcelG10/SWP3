@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>PegaPhant</title>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+        }
+
+        #pega {
+            position: absolute;
+            width: 100px;
+        }
+
+        #orbit-point {
+            position: absolute;
+            left: 700px;
+            top: 700px;
+            width: 12px;
+            height: 12px;
+            background: red;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        let pega_name = "hugo";
+        let pega_farbe = "grau";
+        let pega_geschlecht = "w";
+        let pega_position_x = 0;
+        let pega_position_y = 1;
+        let pega_hoehe = 280; //cm
+        let pega_gewicht = 890; //kg
+        let pega_alter = 50; //Jahre
+        let pega_ohrenlänge = 409 //cm
+        let pega_breite = 187 //cm
+        let pega_geschwindigkeit = 9; //kmh
+        let pega_istamfliegen = false;
+        let pega_istamlaufen = false;
+        let pega_anzahl_ohren = 2;
+
+        function print_info() {
+            console.log(`name: ${pega_name} farbe: ${pega_farbe} geschlecht: ${pega_geschlecht} ${pega_alter} ${pega_anzahl_fluegel}`);
+            //console.log("alter: " + pega_alter + "breite : " + pega_breite)
+        }
+
+        function pega_fliegt() {
+            pega_geschwindigkeit = 300; //kmh
+            pega_istamfliegen = true;
+            pega_position_y = pega_position_y + 1;
+        }
+        //
+
+
+
+
+        // Starte die Animation
+
+        print_info();
+        pega_fliegt();
+        print_info();
+
+
+    </script>
+
+    <img src="img/pegaphant-transparent-300x274.png" alt="elephant" width="30%" id="pega" />
+    <div id="orbit-point" title="Mittelpunkt bei 1000, 1000"></div>
+    <script>
+        const elephant = document.getElementById('pega');
+        let angle = 0;
+        const centerX = 700;
+        const centerY = 700;
+        const radius = 150;
+
+        function animate() {
+            angle += 0.01;
+            elephant.style.left = `${centerX + Math.cos(angle) * radius - elephant.offsetWidth / 2}px`;
+            elephant.style.top = `${centerY + Math.sin(angle) * radius - elephant.offsetHeight / 2}px`;
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+
+</html>

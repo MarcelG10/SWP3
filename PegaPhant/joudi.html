@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+
+        body {
+
+            width: 100dvw;
+
+            height: 100dvh;
+
+            display: flex;
+
+        }
+
+        #pega {
+
+            position: absolute;
+
+            width: 50px;
+
+            height: auto;
+
+        }
+
+        .pegaclass {
+
+            width: 50px;
+
+            position: absolute;
+
+            height: auto;
+
+        }
+</style>
+</head>
+<body>
+
+<script>
+
+        let p_id = "pega";
+
+        let p_posx = 0;
+
+        let p_posy = 0;
+
+        let p_direction = 1;
+
+        let p_name = "Pegafant";
+
+        //Ende von den Daten des Pegafanten
+
+        //Array von den Daten damit wenn man viele Daten hat bzw. viele Pegafanten, man nicht jedes mal die Daten angeben muss.
+
+        let pegaarray = [p_id, p_posx, p_posy, p_direction];
+
+        let gesamtPegaListe = [];
+
+        let bildergesamt = ["../Bild/Pegafant1.png", "../Bild/Pegafant2.png", "../Bild/Pegafant3.png"];
+
+
+        function createImg(n) {
+
+            for (let x = 0; x < n; x++) {
+
+                let random_x = parseInt(Math.random() * 400) + 1;
+
+                let random_y = parseInt(Math.random() * 400) + 1;
+
+                let bildpfad = bildergesamt[Math.floor(Math.random() * bildergesamt.length)]
+
+                let img = document.createElement("img"); ///erzeuge Elemtent
+
+                img.src = bildpfad;       ///eigenschaften des Elements
+
+                img.className = "pegaclass";
+
+                img.style.left = random_x + "px";
+
+                img.style.top = random_y + "px";
+img.id = "id" + x;
+
+                document.body.appendChild(img);    //element in den body schreiben
+
+                gesamtPegaListe.push(["id" + x, random_x, 0, 1, "Pegafant" + x]);
+
+            }
+
+        }
+
+        createImg(10);
+
+
+        function animateArray() {
+
+            const elephant = document.getElementById(pegaarray[0]);
+
+            // Aktualisiere die Position
+
+            pegaarray[1] += pegaarray[3] * 2; // Bewegungsgeschwindigkeit
+
+            // Ändere die Richtung, wenn der Elefant den Rand erreicht
+
+            if (pegaarray[1] <= 10) {
+
+                pegaarray[3] = 1; // Bewege nach rechts
+
+            } else if (pegaarray[1] >= 80) {
+
+                pegaarray[3] = -1; // Bewege nach links
+
+            }
+
+            // Setze die neue Position
+
+            // elephant.style.left = `${p_posx}%`;
+
+            elephant.style.top = `${pegaarray[1]}px`;
+
+            // Führe die Animation erneut aus
+
+            requestAnimationFrame(animateArray);
+
+        }
+
+        // animateArray();
+
+        function animateArrayGesamt() {
+
+            for (let x = 0; x < gesamtPegaListe.length; x++) {
+
+                //hole id für erste grafik
+
+                let idbild = gesamtPegaListe[x][0];
+
+                let bild_x = gesamtPegaListe[x][1]
+
+                let bild_y = gesamtPegaListe[x][2]
+
+                let bild_dir = gesamtPegaListe[x][3]
+
+                let elephant = document.getElementById(idbild);
+
+
+                //gehe rechts
+
+                if (bild_dir == 1) bild_x = bild_x + 2;
+
+                if (bild_dir == -1) bild_x = bild_x + - 2;
+
+                if (bild_x > 1500) {
+
+                    bild_dir = - 1;
+
+                }
+
+                if (bild_x < 0) {
+
+                    bild_dir = 1;
+
+                }
+
+
+                gesamtPegaListe[x][3] = bild_dir;
+
+                gesamtPegaListe[x][1] = bild_x;
+
+                // Setze die neue Position
+
+                //elephant.style.left = `${p_posx}%`;
+
+                elephant.style.left = gesamtPegaListe[x][1] + "px";
+
+                // Führe die Animation erneut aus
+
+            }
+
+            requestAnimationFrame(animateArrayGesamt);
+
+        }
+
+        animateArrayGesamt();
+</script>
+</body>
+</html>
+ 
